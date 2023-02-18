@@ -64,12 +64,6 @@ public class ConsoleApp
         app.Stop();
     }
 
-    public void Reset()
-    {
-        app = new App(new DataShaper());
-        app.Run();
-    }
-
     public void Strat()
     {
         app ??= new App(new DataShaper());
@@ -84,7 +78,6 @@ internal static class AppRootCommand
     static AppRootCommand() {
         root.AddCommand(AppStartCommand.command);
         root.AddCommand(AppStopCommand.command);
-        root.AddCommand(AppResetCommand.command);
     }
 }
 
@@ -124,18 +117,5 @@ internal static class AppStopCommand
 
     public static void Handler() {
         ConsoleApp.instance.Stop();
-    }
-}
-
-internal static class AppResetCommand
-{
-    public static readonly Command command = new Command("reset", "Resets data processing service for payment transactions.");
-
-    static AppResetCommand() {
-        command.SetHandler(Handler);
-    }
-
-    public static void Handler() {
-
     }
 }

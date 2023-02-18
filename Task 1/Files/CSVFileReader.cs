@@ -13,10 +13,11 @@ namespace Files
         {
             var csvConfig = new CsvConfiguration(CultureInfo.CurrentCulture)
             {
-                HasHeaderRecord = true
+                HasHeaderRecord = true,
+                Delimiter = ",",
             };
 
-            using var streamReader = File.OpenText("users.csv");
+            using var streamReader = File.OpenText(path);
             using var csvReader = new CsvReader(streamReader, csvConfig);
 
             ParsingResult pr = new ParsingResult();
@@ -37,6 +38,7 @@ namespace Files
                         Account_number = long.Parse(csvReader.GetField<string>(5)),
                         Service = csvReader.GetField<string>(6)
                     };
+                    pr.details.Add(pd);
                     pr.lines++;
                 }
                 catch

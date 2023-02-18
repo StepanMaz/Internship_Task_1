@@ -25,7 +25,7 @@ namespace Application
             _conf = new ConfigurationManager("config.json").GetConfig();
             _shaper = shaper;
 
-            //SetTimer();
+            SetTimer();
         }
 
         private async Task SetTimer() {

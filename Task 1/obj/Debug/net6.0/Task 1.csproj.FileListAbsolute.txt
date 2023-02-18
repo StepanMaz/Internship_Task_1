@@ -28,3 +28,4 @@ D:\Projects\GitHub\Internship\Task 1\obj\Debug\net6.0\refint\Task 1.dll
 D:\Projects\GitHub\Internship\Task 1\obj\Debug\net6.0\Task 1.pdb
 D:\Projects\GitHub\Internship\Task 1\obj\Debug\net6.0\Task 1.genruntimeconfig.cache
 D:\Projects\GitHub\Internship\Task 1\obj\Debug\net6.0\ref\Task 1.dll
+D:\Projects\GitHub\Internship\Task 1\bin\Debug\net6.0\CsvHelper.dll
