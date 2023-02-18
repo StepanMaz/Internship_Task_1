@@ -1,14 +1,15 @@
 using Entities;
 using System.Text.RegularExpressions;
 using System.Collections.Concurrent;
+using System.Globalization;
 
 namespace Files
 {
     public class TXTFileReader : FileReader
     {
-        Regex regex = new Regex(@"[“""]{1}[\w\s,\\]+[“""]{1}|[\w-]+");
+        Regex regex = new Regex(@"[“""]{1}[\w\s,\\]+[”""]{1}|[\w\-\.]+");
 
-        public override ParsingResult ReadData(string path, CancellationToken cancellationToken)
+        public override async Task<ParsingResult> ReadData(string path, CancellationToken cancellationToken)
         {
             ParsingResult pr = new ParsingResult();
             pr.details = new List<PaymentDetails>();
@@ -17,9 +18,9 @@ namespace Files
             ConcurrentQueue<string> queue = new ();
             StreamReader reader = new StreamReader(path);
 
-            var task = QueueLinesForProcessing(queue, reader);
+            await QueueLinesForProcessing(queue, reader);
 
-            while(task.Status != TaskStatus.RanToCompletion && !cancellationToken.IsCancellationRequested && queue.Count != 0) 
+            while(!cancellationToken.IsCancellationRequested && queue.Count != 0) 
             {
                 string line;
                 queue.TryDequeue(out line);
@@ -50,7 +51,7 @@ namespace Files
         {
             while(!reader.EndOfStream)
             {
-                queue.Append(await reader.ReadLineAsync());
+                queue.Enqueue(await reader.ReadLineAsync());
             }
             return queue;
         }
@@ -67,9 +68,9 @@ namespace Files
             return new PaymentDetails() {
                 First_name = array[0],
                 Last_name = array[1],
-                Address = array[2],
-                Payment = decimal.Parse(array[3]),
-                Date = DateOnly.Parse(array[4]),
+                Address = array[2].Trim('"', '”', '“'),
+                Payment = decimal.Parse(array[3], CultureInfo.InvariantCulture),
+                Date = DateTime.ParseExact(array[4], "yyyy-dd-MM", CultureInfo.InvariantCulture),
                 Account_number = long.Parse(array[5]),
                 Service = array[6]
             };

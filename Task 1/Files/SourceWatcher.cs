@@ -22,19 +22,30 @@ namespace Files
             _directory_path = directory_path;
             _strategy = strategy;
             _filter = filter;
+
+            Start();
         }
 
-        public void Start()
+        private void Start()
         {
             _watcher = new (_directory_path);
             _watcher.Filter = _filter;
-            _watcher.NotifyFilter = NotifyFilters.CreationTime;
+            _watcher.NotifyFilter = NotifyFilters.Attributes
+                              | NotifyFilters.CreationTime
+                              | NotifyFilters.DirectoryName
+                              | NotifyFilters.FileName
+                              | NotifyFilters.LastAccess
+                              | NotifyFilters.LastWrite
+                              | NotifyFilters.Security
+                              | NotifyFilters.Size;
             _watcher.Created += OnFileCreated;
+            _watcher.IncludeSubdirectories = true;
+            _watcher.EnableRaisingEvents = true;
         }
 
         private async void OnFileCreated(object sender, FileSystemEventArgs e)
         {
-            OnFileParsed?.Invoke(this, _strategy.ReadData(e.FullPath, _cancellationToken));
+            OnFileParsed?.Invoke(this, await _strategy.ReadData(e.FullPath, _cancellationToken));
         }
 
         public void Stop()

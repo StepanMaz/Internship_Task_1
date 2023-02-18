@@ -1,77 +1,51 @@
 using Entities;
 using System.Text.RegularExpressions;
 using System.Collections.Concurrent;
+using System.Globalization;
+using CsvHelper;
+using CsvHelper.Configuration;  
 
 namespace Files
 {
     public class CSVFileReader : FileReader
     {
-        public override ParsingResult ReadData(string path, CancellationToken cancellationToken)
+        public override async Task<ParsingResult> ReadData(string path, CancellationToken cancellationToken)
         {
+            var csvConfig = new CsvConfiguration(CultureInfo.CurrentCulture)
+            {
+                HasHeaderRecord = true
+            };
+
+            using var streamReader = File.OpenText("users.csv");
+            using var csvReader = new CsvReader(streamReader, csvConfig);
+
             ParsingResult pr = new ParsingResult();
             pr.details = new List<PaymentDetails>();
             pr.file_path = path;
 
-            ConcurrentQueue<string> queue = new ();
-            StreamReader reader = new StreamReader(path);
-
-            reader.ReadLine();
-            var task = QueueLinesForProcessing(queue, reader);
-
-            while(task.Status != TaskStatus.RanToCompletion && !cancellationToken.IsCancellationRequested && queue.Count != 0) 
+            while (csvReader.Read())
             {
-                string line;
-                queue.TryDequeue(out line);
-
-                try{
-                    var pd = ParseLine(line);
-
-                    if(!ValidatePaymentDetails(pd))
+                try
+                {
+                    var pd = new PaymentDetails()
                     {
-                        pr.failed_lines++;
-                    }
-                    else
-                    {
-                        pr.details.Add(pd);
-                    }
+                        First_name = csvReader.GetField<string>(0),
+                        Last_name = csvReader.GetField<string>(1),
+                        Address = csvReader.GetField<string>(2).Trim('"', '”', '“'),
+                        Payment = decimal.Parse(csvReader.GetField<string>(3), CultureInfo.InvariantCulture),
+                        Date = DateTime.ParseExact(csvReader.GetField<string>(4), "yyyy-dd-MM", CultureInfo.InvariantCulture),
+                        Account_number = long.Parse(csvReader.GetField<string>(5)),
+                        Service = csvReader.GetField<string>(6)
+                    };
+                    pr.lines++;
                 }
-                catch {
+                catch
+                {
                     pr.failed_lines++;
                 }
-
-                pr.lines++;
             }
 
             return pr;
-        }
-
-        private async Task<ConcurrentQueue<string>> QueueLinesForProcessing(ConcurrentQueue<string> queue, StreamReader reader)
-        {
-            while(!reader.EndOfStream)
-            {
-                queue.Append(await reader.ReadLineAsync());
-            }
-            return queue;
-        }
-
-        private PaymentDetails ParseLine(string line)
-        {
-            string[] array = line.Split(';');
-
-            if(array.Length != 7)
-            {
-                throw new Exception("Invalid line format");
-            }
-
-            return new PaymentDetails() {
-                First_name = array[0],
-                Last_name = array[1],
-                Address = array[2],
-                Payment = decimal.Parse(array[3]),
-                Date = DateOnly.Parse(array[4]),
-                Account_number = long.Parse(array[5]),
-                Service = array[6]
-            };
         }
     }
 }

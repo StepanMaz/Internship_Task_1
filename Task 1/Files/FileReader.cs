@@ -5,7 +5,7 @@ namespace Files
 {
     public abstract class FileReader
     {
-        public abstract ParsingResult ReadData(string path, CancellationToken cancellationToken);
+        public abstract Task<ParsingResult> ReadData(string path, CancellationToken cancellationToken);
 
         protected bool ValidatePaymentDetails(PaymentDetails paymentDetails)
         {

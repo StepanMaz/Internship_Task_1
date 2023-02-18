@@ -1,5 +1,6 @@
 using Configuration;
 using Files;
+using System.IO;
 using System.Text.Json;
 using System.Timers;
 
@@ -24,7 +25,7 @@ namespace Application
             _conf = new ConfigurationManager("config.json").GetConfig();
             _shaper = shaper;
 
-            SetTimer();
+            //SetTimer();
         }
 
         private async Task SetTimer() {
@@ -48,14 +49,14 @@ namespace Application
         }
 
         private string GetOutputTimedFolder() => string.Format("{0}\\{1}", _conf.GetOutputDirectory(), DateTime.Today.ToString("dd_MM-yyyy"));
-        private string GetFileName() => string.Format("{0}\\output{1},json", GetOutputTimedFolder(), file_count);
+        private string GetFileName() => string.Format("{0}\\output{1}.json", GetOutputTimedFolder(), file_count);
 
         public void Run()
         {
-            txtWatcher = new SourceWatcher(new TXTFileReader(), _conf.GetInputDirectory(), ".txt", CTsource.Token);
+            txtWatcher = new SourceWatcher(new TXTFileReader(), Path.GetFullPath(_conf.GetInputDirectory()), "*.txt", CTsource.Token);
             txtWatcher.OnFileParsed += OnFileParsed;
-            csvWatcher = new SourceWatcher(new CSVFileReader(), _conf.GetInputDirectory(), ".csv", CTsource.Token);
-            txtWatcher.OnFileParsed += OnFileParsed;
+            csvWatcher = new SourceWatcher(new CSVFileReader(), Path.GetFullPath(_conf.GetInputDirectory()), "*.csv", CTsource.Token);
+            csvWatcher.OnFileParsed += OnFileParsed;
         }
 
         public async void OnFileParsed(object sender, ParsingResult result)
@@ -65,7 +66,10 @@ namespace Application
             _meta.found_errors += result.failed_lines;
             _meta.parsed_lines += result.lines;
             _meta.parsed_files++;
-            await File.WriteAllTextAsync(GetFileName(), _shaper.TransformData(result.details));
+
+            string file_name = GetFileName();
+            string res = _shaper.TransformData(result.details);
+            await File.WriteAllTextAsync(file_name, res);
         }
 
         public void Stop() 

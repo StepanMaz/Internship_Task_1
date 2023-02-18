@@ -4,8 +4,11 @@ using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 
+//VS
+Directory.SetCurrentDirectory("./../../../");
 try{
-    await ConsoleApp.instance.Run(new CancellationToken());
+    await ConsoleApp.instance.Run();
+    Console.ReadKey();
 }
 catch (Exception e) {
     System.Console.WriteLine("Oops, error occurred");
@@ -20,7 +23,7 @@ public class ConsoleApp
 
     private Parser _parser;
 
-    private bool _run = true;
+    private CancellationTokenSource _source = new CancellationTokenSource();
 
     private App app;
 
@@ -43,14 +46,14 @@ public class ConsoleApp
     }
 
     public void Exit() {
-        _run = false;
+        _source.Cancel();
     }
 
-    public async Task Run(CancellationToken cancellationToken){
+    public async Task Run(){
         System.Console.WriteLine("App is running.");
         string p = string.Format("{0}: ", APP_NAME);
 
-        while(_run) {
+        while(!_source.IsCancellationRequested) {
             System.Console.Write(p);
             await _parser.InvokeAsync(Console.ReadLine()).ConfigureAwait(false);
         }
