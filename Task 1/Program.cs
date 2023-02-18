@@ -4,11 +4,17 @@ using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 
-await ConsoleApp.instance.Run(new CancellationToken());
+try{
+    await ConsoleApp.instance.Run(new CancellationToken());
+}
+catch (Exception e) {
+    System.Console.WriteLine("Oops, error occurred");
+    System.Console.WriteLine("\t" + e.Message);
+}
 
 public class ConsoleApp
 {
-    public const string APP_NAME = "-|-";
+    public const string APP_NAME = "app";
 
     public static readonly ConsoleApp instance = new ConsoleApp();
 
@@ -21,8 +27,19 @@ public class ConsoleApp
     private ConsoleApp()
     {
         var builder = new CommandLineBuilder(AppRootCommand.root).UseDefaults();
-
-        var parser = builder.Build();
+        builder.AddMiddleware(async (context, next) => {
+            try
+            {
+                await next(context);
+            }
+            catch (Exception e) 
+            {
+                Exit();
+                System.Console.WriteLine("Oops, error occurred");
+                System.Console.WriteLine("\t" + e.Message);
+            }
+        });
+        _parser = builder.Build();
     }
 
     public void Exit() {
@@ -30,6 +47,7 @@ public class ConsoleApp
     }
 
     public async Task Run(CancellationToken cancellationToken){
+        System.Console.WriteLine("App is running.");
         string p = string.Format("{0}: ", APP_NAME);
 
         while(_run) {
@@ -38,9 +56,21 @@ public class ConsoleApp
         }
     }
 
+    public void Stop()
+    {
+        app.Stop();
+    }
+
+    public void Reset()
+    {
+        app = new App(new DataShaper());
+        app.Run();
+    }
+
     public void Strat()
     {
-        app = new App();
+        app ??= new App(new DataShaper());
+        app.Run();
     }
 }
 
@@ -90,7 +120,7 @@ internal static class AppStopCommand
     }
 
     public static void Handler() {
-
+        ConsoleApp.instance.Stop();
     }
 }
 

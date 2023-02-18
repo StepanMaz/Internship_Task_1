@@ -8,8 +8,8 @@ namespace Configuration
 
         public string GetInputDirectory() => input;
 
-        public string GetLogDirectory() => output;
+        public string GetOutputDirectory() => output;
 
-        public string GetOutputDirectory() => log;
+        public string GetLogDirectory() => log;
     }
 }
