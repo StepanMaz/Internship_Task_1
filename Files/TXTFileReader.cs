@@ -7,7 +7,7 @@ namespace Files
 {
     public class TXTFileReader : FileReader
     {
-        Regex regex = new Regex(@"[“""]{1}[\w\s,\\]+[”""]{1}|[\w\-\.]+");
+        Regex regex = new Regex(@"\w[\w\s\.\-]+|“[\w\s,]+”");
 
         public override async Task<ParsingResult> ReadData(string path, CancellationToken cancellationToken)
         {
@@ -16,9 +16,9 @@ namespace Files
             pr.file_path = path;
 
             ConcurrentQueue<string> queue = new ();
-            StreamReader reader = new StreamReader(path);
+            using StreamReader reader = new StreamReader(path);
 
-            await QueueLinesForProcessing(queue, reader);
+            await QueueLinesForProcessing(queue, reader).ConfigureAwait(false);
 
             while(!cancellationToken.IsCancellationRequested && queue.Count != 0) 
             {
@@ -51,7 +51,7 @@ namespace Files
         {
             while(!reader.EndOfStream)
             {
-                queue.Enqueue(await reader.ReadLineAsync());
+                queue.Enqueue(await reader.ReadLineAsync().ConfigureAwait(false));
             }
             return queue;
         }
@@ -66,13 +66,13 @@ namespace Files
             }
 
             return new PaymentDetails() {
-                First_name = array[0],
-                Last_name = array[1],
-                Address = array[2].Trim('"', '”', '“'),
-                Payment = decimal.Parse(array[3], CultureInfo.InvariantCulture),
-                Date = DateTime.ParseExact(array[4], "yyyy-dd-MM", CultureInfo.InvariantCulture),
-                Account_number = long.Parse(array[5]),
-                Service = array[6]
+                First_name = array[0].Trim('"', '”', '“', ' '),
+                Last_name = array[1].Trim('"', '”', '“', ' '),
+                Address = array[2].Trim('"', '”', '“', ' '),
+                Payment = decimal.Parse(array[3].Trim('"', '”', '“', ' '), CultureInfo.InvariantCulture),
+                Date = DateTime.ParseExact(array[4].Trim('"', '”', '“', ' '), "yyyy-dd-MM", CultureInfo.InvariantCulture),
+                Account_number = long.Parse(array[5].Trim('"', '”', '“', ' ')),
+                Service = array[6].Trim('"', '”', '“', ' ')
             };
         }
     }

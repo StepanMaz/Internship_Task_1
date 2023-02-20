@@ -25,6 +25,9 @@ namespace Application
             _conf = new ConfigurationManager("config.json").GetConfig();
             _shaper = shaper;
 
+            string directory = GetOutputTimedFolder();
+            file_count = Directory.Exists(directory) ? Directory.GetFiles(directory, "*").Length + 1 : 1;
+
             SetTimer();
         }
 
@@ -59,6 +62,7 @@ namespace Application
             csvWatcher.OnFileParsed += OnFileParsed;
         }
 
+        object lockobj = new object();
         public async void OnFileParsed(object sender, ParsingResult result)
         {
             if(result.isInvalid)
@@ -67,14 +71,30 @@ namespace Application
             _meta.parsed_lines += result.lines;
             _meta.parsed_files++;
 
-            string file_name = GetFileName();
-            string res = _shaper.TransformData(result.details);
-            await File.WriteAllTextAsync(file_name, res);
+            await Task.Run(() => {
+                lock(lockobj)
+                {
+                    string file_name = GetFileName();
+                    string res = _shaper.TransformData(result.details);
+                    if(!Directory.Exists(GetOutputTimedFolder()))
+                        Directory.CreateDirectory(GetOutputTimedFolder());
+                    File.WriteAllText(file_name, res);
+
+                    file_count++;
+                }
+            });
+        }
+
+        public void Continue()
+        {
+            txtWatcher.Continue();
+            csvWatcher.Continue();
         }
 
         public void Stop() 
         {
-            CTsource.Cancel();
+            txtWatcher.Stop();
+            csvWatcher.Stop();
         }
     }
 }

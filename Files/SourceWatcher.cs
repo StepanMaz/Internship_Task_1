@@ -45,12 +45,18 @@ namespace Files
 
         private async void OnFileCreated(object sender, FileSystemEventArgs e)
         {
-            OnFileParsed?.Invoke(this, await _strategy.ReadData(e.FullPath, _cancellationToken));
+            if(!_cancellationToken.IsCancellationRequested)
+                OnFileParsed?.Invoke(this, await _strategy.ReadData(e.FullPath, _cancellationToken));
+        }
+
+        public void Continue()
+        {
+            _watcher.EnableRaisingEvents = true;
         }
 
         public void Stop()
         {
-            _watcher.Dispose();
+            _watcher.EnableRaisingEvents = false;
         }
     }
 }

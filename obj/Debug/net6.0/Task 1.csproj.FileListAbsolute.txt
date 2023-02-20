@@ -29,3 +29,34 @@ D:\Projects\GitHub\Internship\Task 1\obj\Debug\net6.0\Task 1.pdb
 D:\Projects\GitHub\Internship\Task 1\obj\Debug\net6.0\Task 1.genruntimeconfig.cache
 D:\Projects\GitHub\Internship\Task 1\obj\Debug\net6.0\ref\Task 1.dll
 D:\Projects\GitHub\Internship\Task 1\bin\Debug\net6.0\CsvHelper.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\Task 1.exe
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\Task 1.deps.json
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\Task 1.runtimeconfig.json
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\Task 1.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\Task 1.pdb
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\CsvHelper.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\System.CommandLine.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\cs\System.CommandLine.resources.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\de\System.CommandLine.resources.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\es\System.CommandLine.resources.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\fr\System.CommandLine.resources.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\it\System.CommandLine.resources.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\ja\System.CommandLine.resources.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\ko\System.CommandLine.resources.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\pl\System.CommandLine.resources.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\pt-BR\System.CommandLine.resources.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\ru\System.CommandLine.resources.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\tr\System.CommandLine.resources.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\zh-Hans\System.CommandLine.resources.dll
+D:\Projects\GitHub\Internship_Task1\bin\Debug\net6.0\zh-Hant\System.CommandLine.resources.dll
+D:\Projects\GitHub\Internship_Task1\obj\Debug\net6.0\Task 1.csproj.AssemblyReference.cache
+D:\Projects\GitHub\Internship_Task1\obj\Debug\net6.0\Task 1.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\GitHub\Internship_Task1\obj\Debug\net6.0\Task 1.AssemblyInfoInputs.cache
+D:\Projects\GitHub\Internship_Task1\obj\Debug\net6.0\Task 1.AssemblyInfo.cs
+D:\Projects\GitHub\Internship_Task1\obj\Debug\net6.0\Task 1.csproj.CoreCompileInputs.cache
+D:\Projects\GitHub\Internship_Task1\obj\Debug\net6.0\Task 1.csproj.CopyComplete
+D:\Projects\GitHub\Internship_Task1\obj\Debug\net6.0\Task 1.dll
+D:\Projects\GitHub\Internship_Task1\obj\Debug\net6.0\refint\Task 1.dll
+D:\Projects\GitHub\Internship_Task1\obj\Debug\net6.0\Task 1.pdb
+D:\Projects\GitHub\Internship_Task1\obj\Debug\net6.0\Task 1.genruntimeconfig.cache
+D:\Projects\GitHub\Internship_Task1\obj\Debug\net6.0\ref\Task 1.dll

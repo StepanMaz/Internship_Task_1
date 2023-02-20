@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\GitHub\\Internship\\Task 1\\Task 1.csproj": {}
+    "D:\\Projects\\GitHub\\Internship_Task1\\Task 1.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\GitHub\\Internship\\Task 1\\Task 1.csproj": {
+    "D:\\Projects\\GitHub\\Internship_Task1\\Task 1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\GitHub\\Internship\\Task 1\\Task 1.csproj",
+        "projectUniqueName": "D:\\Projects\\GitHub\\Internship_Task1\\Task 1.csproj",
         "projectName": "Task 1",
-        "projectPath": "D:\\Projects\\GitHub\\Internship\\Task 1\\Task 1.csproj",
+        "projectPath": "D:\\Projects\\GitHub\\Internship_Task1\\Task 1.csproj",
         "packagesPath": "C:\\Users\\Stepan\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\GitHub\\Internship\\Task 1\\obj\\",
+        "outputPath": "D:\\Projects\\GitHub\\Internship_Task1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Stepan\\AppData\\Roaming\\NuGet\\NuGet.Config",

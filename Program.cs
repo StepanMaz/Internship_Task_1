@@ -50,7 +50,7 @@ public class ConsoleApp
     }
 
     public async Task Run(){
-        System.Console.WriteLine("App is running.");
+        System.Console.WriteLine("Print 'start' to start.");
         string p = string.Format("{0}: ", APP_NAME);
 
         while(!_source.IsCancellationRequested) {
@@ -62,12 +62,22 @@ public class ConsoleApp
     public void Stop()
     {
         app.Stop();
+        System.Console.WriteLine("App stoped");
     }
 
     public void Strat()
     {
-        app ??= new App(new DataShaper());
-        app.Run();
+        if(app == null)
+        {
+            app ??= new App(new DataShaper());
+            app.Run();
+        }
+        else
+        {
+            app.Continue();
+        }
+
+        System.Console.WriteLine("App is running");
     }
 }
 

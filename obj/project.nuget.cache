@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lm/jqGg0i4K3bXE15gV7BNy3MHt/SqKCQY8tIHPnYCluTl7XjnAnx3aiFNLHO+2v925C+sSfV+JXZDTk5Hc8bw==",
+  "dgSpecHash": "Y5vRw49iUCgDgh8wYNQ5HQlYA6D5K+tQdmS5+/DOn9fDoPfM9lEhGfWN1nRTuQfWcCpw4qIWYe90LwIRYMBzJQ==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\GitHub\\Internship\\Task 1\\Task 1.csproj",
+  "projectFilePath": "D:\\Projects\\GitHub\\Internship_Task1\\Task 1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Stepan\\.nuget\\packages\\csvhelper\\30.0.1\\csvhelper.30.0.1.nupkg.sha512",
     "C:\\Users\\Stepan\\.nuget\\packages\\system.commandline\\2.0.0-beta4.22272.1\\system.commandline.2.0.0-beta4.22272.1.nupkg.sha512"
